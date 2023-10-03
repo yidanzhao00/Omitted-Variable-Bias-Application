@@ -1,0 +1,111 @@
+Question 7
+
+Common support refers to the overlap in the distribution of propensity scores between the treated and control groups in observational studies. It is an essential concept in causal inference, especially when estimating treatment effects using methods like matching, weighting, or subclassification based on propensity scores.
+
+In Detail:
+Propensity Score: It is the probability of receiving the treatment given a set of observed covariates. It is used to reduce the bias by equating groups based on these covariates.
+Common Support: It ensures that for each treated observation, there is a comparable control observation with a similar propensity score and vice versa.
+
+Importance of Common Support:
+Bias Reduction: It ensures that comparisons between the treated and control groups are only made among units with similar observed characteristics, reducing bias in estimating treatment effects.
+Validity of Results: Without common support, the treatment effect estimates can be unreliable because they are extrapolated from non-comparable units.
+
+Checking for Common Support:
+Graphical Inspection: One common way to check for common support is to plot the distributions of propensity scores for both groups and observe the overlap.
+Trimming or Discarding Data: Researchers may exclude observations that fall outside the common support to make the groups comparable.
+
+Example:
+Consider an observational study aiming to estimate the effect of a training program (treatment) on income. Units (people) are not randomly assigned to treatment/control, so researchers use propensity score methods to control for observed confounders.
+
+Treated Group: People who participated in the training program.
+Control Group: People who did not participate.
+Researchers estimate propensity scores for each person, representing the probability of participating in the training given their observed characteristics (like age, education, etc.).
+
+With Common Support: Every treated person has a counterpart in the control group with a similar propensity score, making the groups comparable.
+Without Common Support: There are treated people with propensity scores for which there are no control people with similar scores, leading to bias.
+
+In essence, common support is crucial to ensure the validity of causal inferences drawn from observational data when using propensity score methods. Researchers aim for substantial overlap in the propensity score distributions to make credible comparisons between the treated and control groups.
+
+
+
+
+
+When checking for common support, you are indeed looking for the overlap in the distribution of propensity scores between the treated and control groups. However, it’s not just about where the two Kernel Density Estimate (KDE) lines intersect, but rather the entire range where both groups have overlapping propensity scores. This overlap ensures that each unit in the treatment group has a comparable unit in the control group, and vice versa, based on their propensity scores.
+
+Here's what to look for:
+
+1. Overlapping Region:
+What it is: The region where both KDE lines (or histograms) for the treated and control groups exist together. It indicates the range of propensity scores where you have both treated and control units.
+Why it’s important: It ensures that you can make valid comparisons between treated and control units within this range because they have similar observed characteristics.
+
+2. Areas with No Overlap:
+What it is: Regions where only one KDE line (or histogram) exists, meaning only one group (either treated or control) has units with those propensity scores.
+Why it’s important: It's often advisable to exclude units outside the common support to prevent bias, as there are no comparable units in the other group for these propensity scores.
+
+3. Visual Inspection:
+What to look for: You're not necessarily focusing on where the two KDE lines intersect but rather ensuring that there is a substantial overlap in their distributions. This overlap should ideally cover a broad range of propensity scores for making unbiased treatment effect estimates.
+
+Example:
+Suppose you plot the propensity scores of the treatment and control groups and observe the KDE lines.
+
+Complete Overlap: Both lines cover the same range of propensity scores—indicating common support across all scores.
+Partial Overlap: The lines overlap in a specific range but diverge elsewhere—indicating common support in the overlapping range.
+No Overlap: There’s no intersection between the lines—indicating no common support, and caution is needed in estimating treatment effects.
+
+
+In summary, the objective is to ensure a significant overlap in propensity scores, allowing for valid comparisons between treated and control units while controlling for observed covariates. If the overlap is insufficient, refining the model or considering other matching techniques may be necessary to achieve a balanced comparison.
+
+
+
+
+
+
+Question 9
+
+To test the conditional independence assumption (CIA) that completing a bachelor’s degree is as good as randomly assigned conditional on covariate X1, you can conduct a balancing test using X2 variables as outcomes. Essentially, you'll check if the distribution of X2 variables (household size and English as mother tongue) is balanced across the treatment and control groups when conditioned on X1. This is done to evaluate if the treatment assignment is independent of these variables when conditioned on X1.
+
+Step 1: Test the CIA Assumption with Balancing Test
+Fit a model with the treatment indicator as the independent variable and the X2 covariates (household size, English as mother tongue) as dependent variables, while controlling for X1.
+
+Check the coefficients and p-values of the treatment variable in these regressions.
+
+Step 2: Interpret the Results
+If the coefficients of the treatment variable are not statistically significant, it suggests that the treatment assignment is balanced on X2 variables when conditioned on X1, supporting the CIA.
+
+If they are significant, it indicates an imbalance, and the CIA may be violated.
+
+How to Interpret the Outcome
+Coefficient Close to Zero and Not Statistically Significant: Indicates that the treatment is balanced across X2 variables given X1, supporting the CIA.
+Coefficient Significant and Not Close to Zero: Indicates that there is an imbalance in X2 variables across the treatment groups even after controlling for X1, potentially violating the CIA.
+
+Decision Making
+If CIA is Supported: Proceed with the analysis, as the initial assumption of conditional independence is supported.
+If CIA is Violated: You might need to reconsider the model, include more covariates, or use other methods to account for the observed imbalance.
+
+Answering Part 2
+The reasonableness of the CIA assumption made earlier will depend on the results of this balancing test. If the balancing test shows that X2 variables are balanced across treatment groups when conditioned on X1, then the CIA is likely reasonable. Otherwise, caution is needed in interpreting the treatment effect estimated under the CIA.
+
+
+
+
+
+1. Interpretation of Results:
+For Household Size (hhsize):
+Coefficient = -0.3371: This negative coefficient implies that, holding all else constant, being in the treatment group (i.e., having a bachelor’s degree) is associated with a 0.3371 unit decrease in household size on average, compared to the control group.
+p-value = 0.0: Since the p-value is less than 0.05, this coefficient is statistically significant. You can reject the null hypothesis that the treatment has no effect on household size.
+For English as Mother Tongue (mtnen):
+Coefficient = 0.0060: This positive coefficient implies that, holding all else constant, being in the treatment group is associated with a 0.0060 unit increase in the likelihood of having English as a mother tongue.
+p-value = 0.0128: This p-value is also less than 0.05, indicating that the effect of the treatment on the likelihood of having English as a mother tongue is statistically significant.
+
+
+2. Implications for the CIA Assumption:
+The Conditional Independence Assumption (CIA) posits that assignment to the treatment group is independent of the potential outcomes, given a set of observed covariates. In your case, the CIA was that having a bachelor’s degree is random and independent of other variables, conditioned on X1.
+
+However, your balancing test using X2 variables (hhsize and mtnen) shows statistically significant differences between the treatment and control groups. This raises questions about the validity of the CIA because it suggests that even after controlling for X1, there are still systematic differences in X2 variables between the two groups.
+
+3. Conclusions:
+Household Size: The treatment group tends to have smaller household sizes. This could suggest that people with a bachelor’s degree might delay family formation or have fewer children, but this is just speculative and would require further study.
+
+Mother Tongue: The treatment group has a slightly higher likelihood of having English as a mother tongue. This could imply a variety of socio-economic and cultural factors at play.
+
+CIA Validity: Given these results, there’s evidence to suggest that the CIA may not hold. The treatment and control groups differ significantly in terms of household size and mother tongue, even after controlling for X1. This could potentially bias the estimated treatment effects unless these differences are accounted for.
